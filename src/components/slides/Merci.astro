@@ -1,0 +1,33 @@
+---
+// Closing slide. Mirrors the title slide (lime, giant word on the baseline)
+// and reuses its `title` controller.
+const word = "Merci!";
+---
+
+<section
+    class="slide absolute inset-0 overflow-hidden bg-lime font-sans text-black"
+    data-slide="title"
+    id="merci"
+>
+    <div class="absolute top-[37px] left-[46px] text-[30px] leading-[36px]" data-split>
+        <span data-line>Applied Archive Atelier</span>
+        <span data-line class="opacity-50">
+            UQAM Design
+        </span>
+    </div>
+
+    <div class="absolute top-[37px] right-[38px] text-[30px] leading-[36px]" data-split>
+        <span data-line>8 octobre 2026</span>
+    </div>
+
+    <h1
+        class="tracking-display absolute bottom-0 left-[40px] text-[600px] leading-[0.8] font-bold whitespace-nowrap"
+        aria-label={word}
+    >
+        {[...word].map((c) => (
+            <span class="inline-block" data-char="letter" aria-hidden="true">
+                {c}
+            </span>
+        ))}
+    </h1>
+</section>

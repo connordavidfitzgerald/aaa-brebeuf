@@ -5,8 +5,8 @@ import type { SlideController } from '../deck';
 const statement: SlideController = {
   enter(el) {
     return revealLines(gsap.timeline(), el.querySelectorAll<HTMLElement>('[data-split]'), 0, {
-      stagger: 0.1,
-      duration: 1.3,
+      stagger: 0.07,
+      duration: 0.95,
     });
   },
 };

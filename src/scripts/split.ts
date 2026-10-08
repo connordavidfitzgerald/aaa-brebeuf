@@ -60,14 +60,14 @@ export function revealLines(
   tl: gsap.core.Timeline,
   targets: HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>,
   position: gsap.Position = 0,
-  { stagger = 0.08, duration = 1.1 } = {},
+  { stagger = 0.06, duration = 0.85 } = {},
 ) {
   const els = targets instanceof HTMLElement ? [targets] : [...targets];
   const lines = els.flatMap(splitLines);
   tl.fromTo(
     lines,
-    { yPercent: 110 },
-    { yPercent: 0, duration, ease: 'power4.out', stagger },
+    { yPercent: 130 },
+    { yPercent: 0, duration, ease: 'expo.out', stagger },
     position,
   );
   return tl;

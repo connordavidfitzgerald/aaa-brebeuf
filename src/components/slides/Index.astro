@@ -1,0 +1,42 @@
+---
+import SectionArt from '../grid/SectionArt.astro';
+import { sections } from '../../data/sections';
+
+// Three tiles per row across the 1840px content width, tight 10px gaps,
+// each a scaled copy of the full slide at the current stage height.
+const GAP = 10;
+const TILE_SCALE = (1840 - 2 * GAP) / 3 / 1920;
+---
+
+<section id="index" class="slide absolute inset-0 overflow-hidden bg-black font-sans text-white" data-slide="index">
+  <div class="absolute top-[40px] left-[40px] text-[20px] leading-[0.8] font-bold tracking-[-0.05em]" data-a="lines">
+    <span data-line>Applied</span>
+    <span data-line>Archive</span>
+  </div>
+  <div class="label absolute top-[40px] right-[40px]" data-a="lines"><span data-line>L4E × A.A.A.</span></div>
+
+  <div class="absolute inset-x-[40px] top-(--hang) grid grid-cols-12 gap-x-[20px]">
+    <h2 class="col-span-6 text-[72px] leading-[0.97] font-medium tracking-[-0.02em]" data-a="lines">
+      <span data-line>Huma Document</span>
+    </h2>
+  </div>
+
+  <div class="absolute inset-x-[40px] bottom-[40px] grid grid-cols-3" style={`gap: ${GAP}px`}>
+    {
+      sections.map((s) => (
+        <button
+          type="button"
+          class="group relative cursor-pointer overflow-hidden text-left"
+          data-goto={s.id}
+          data-a="clip"
+          aria-label={`Go to ${s.num} ${s.title.join(' ')}`}
+          style={`height: calc(var(--stage-h) * ${TILE_SCALE})`}
+        >
+          <div class="absolute top-0 left-0 h-(--stage-h) w-[1920px] origin-top-left" style={`transform: scale(${TILE_SCALE})`}>
+            <SectionArt num={s.num} title={s.title} />
+          </div>
+        </button>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+import ContentSlide from '../grid/ContentSlide.astro';
+import { sections, sectionLabel } from '../../data/sections';
+
+const rows = [
+  { name: 'Dina', words: ['dynamic', 'transformative', 'community', 'collaboration', 'flourishing'] },
+  { name: 'Julian', words: ['lighter on text', 'contemporary', 'simple', 'interdisciplinary', 'beautiful'] },
+  { name: 'Julia', words: ['dynamic', 'clear', 'engaging', 'warm', 'simple'] },
+  { name: 'Julie', words: ['engaging', 'inviting', 'uplifting', 'intentional', 'effective', 'hopeful'] },
+];
+---
+
+<ContentSlide
+  title={['5 words']}
+  subtitle="5 words that describe the future Ecozoic brand"
+  section={sectionLabel(sections[0])}
+>
+  <div class="grid grid-cols-7 gap-x-[20px] pb-[16px]">
+    <div class="label col-span-2" data-a="lines"><span data-line>Participant</span></div>
+    <div class="label col-span-5" data-a="lines"><span data-line>Words</span></div>
+  </div>
+  {
+    rows.map((row) => (
+      <>
+        <div class="h-px origin-left bg-black" data-a="rule" />
+        <div class="grid grid-cols-7 gap-x-[20px] pt-[18px] pb-[48px] text-[40px] leading-[1.15] font-medium tracking-[-0.02em]">
+          <div class="col-span-2" data-a="lines"><span data-line>{row.name}</span></div>
+          <div class="col-span-5 flex flex-wrap gap-x-[0.6em]" data-a="lines">
+            {row.words.map((w) => <span data-line>{w}</span>)}
+          </div>
+        </div>
+      </>
+    ))
+  }
+</ContentSlide>

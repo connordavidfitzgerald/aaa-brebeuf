@@ -1,0 +1,33 @@
+---
+import ContentSlide from '../grid/ContentSlide.astro';
+import { sections, sectionLabel } from '../../data/sections';
+
+const rows = [
+  ['Community', 'Openness, wholesomeness, proximity'],
+  ['Dynamism', 'Engaging, interdisciplinary, collaboration'],
+  ['Impact', 'Transformative, flourishing, intentional'],
+  ['Accesibility', 'Simple, beautiful, inviting'],
+];
+---
+
+<ContentSlide title={['Selected', 'websites +', 'emotions']} section={sectionLabel(sections[4])}>
+  <p class="text-[72px] leading-[0.97] font-medium tracking-[-0.02em]" data-a="lines">
+    An accesible digital space that dynamically shows the impact of our community.
+  </p>
+
+  <div class="mt-[120px] grid grid-cols-7 gap-x-[20px] pb-[16px]">
+    <div class="label col-span-3" data-a="lines"><span data-line>Key words</span></div>
+    <div class="label col-span-4" data-a="lines"><span data-line>The feeling they evoke</span></div>
+  </div>
+  {
+    rows.map(([key, feeling]) => (
+      <>
+        <div class="h-px origin-left bg-black" data-a="rule" />
+        <div class="grid grid-cols-7 gap-x-[20px] pt-[14px] pb-[26px] text-[40px] leading-[1.1] font-medium tracking-[-0.02em]">
+          <div class="col-span-3" data-a="lines"><span data-line>{key}</span></div>
+          <div class="col-span-4" data-a="lines"><span data-line>{feeling}</span></div>
+        </div>
+      </>
+    ))
+  }
+</ContentSlide>

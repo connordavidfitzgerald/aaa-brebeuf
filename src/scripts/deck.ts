@@ -4,6 +4,12 @@ import statement from './slides/statement';
 import credits from './slides/credits';
 import type from './slides/type';
 import videos from './slides/videos';
+import content from './slides/content';
+import section from './slides/section';
+import index from './slides/index';
+import spectrum from './slides/spectrum';
+import film from './slides/film';
+import cycle from './slides/cycle';
 import { reducedMotion } from './motion';
 
 export interface SlideController {
@@ -16,9 +22,21 @@ export interface SlideController {
 }
 
 // Keyed by each slide's `data-slide` attribute. New slide → add a module here.
-const registry: Record<string, SlideController> = { title, statement, credits, type, videos };
+const registry: Record<string, SlideController> = {
+  title,
+  statement,
+  credits,
+  type,
+  videos,
+  content,
+  section,
+  index,
+  spectrum,
+  film,
+  cycle,
+};
 
-const WIPE = 0.9;
+const WIPE = 0.75;
 
 const slides = [...document.querySelectorAll<HTMLElement>('.slide')];
 const enterTls = new WeakMap<HTMLElement, gsap.core.Timeline>();
@@ -68,11 +86,11 @@ function go(target: number) {
     tl.fromTo(
       incoming,
       { clipPath: dir > 0 ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)' },
-      { clipPath: 'inset(0% 0% 0% 0%)', duration: WIPE, ease: 'power4.inOut' },
+      { clipPath: 'inset(0% 0% 0% 0%)', duration: WIPE, ease: 'expo.inOut' },
       0,
     );
     // Outgoing slide drifts away under the wipe for depth.
-    tl.to(prev, { yPercent: -7 * dir, duration: WIPE, ease: 'power4.inOut' }, 0);
+    tl.to(prev, { yPercent: -7 * dir, duration: WIPE, ease: 'expo.inOut' }, 0);
     if (enterTl) tl.add(() => void enterTl.play(), WIPE * 0.45);
     tl.call(() => { leave(prev); busy = false; }, [], WIPE);
   }
@@ -113,6 +131,11 @@ addEventListener('keydown', (e) => {
     case 'End':
       go(slides.length - 1);
       break;
+    case 'g':
+    case 'G':
+      // Toggle the 12-column grid overlay.
+      document.body.classList.toggle('show-grid');
+      break;
     case 'f':
     case 'F':
       if (document.fullscreenElement) document.exitFullscreen();
@@ -121,7 +144,17 @@ addEventListener('keydown', (e) => {
   }
 });
 
-addEventListener('click', (e) => (e.shiftKey ? prev() : next()));
+addEventListener('click', (e) => {
+  // Index tiles (or any [data-goto]) jump straight to the slide with that id.
+  const jump = (e.target as Element).closest<HTMLElement>('[data-goto]');
+  if (jump) {
+    const target = slides.findIndex((s) => s.id === jump.dataset.goto);
+    if (target >= 0) go(target);
+    return;
+  }
+  if (e.shiftKey) prev();
+  else next();
+});
 addEventListener('hashchange', () => go(indexFromHash()));
 
 // Hide the cursor while presenting; it comes back on mouse movement.
@@ -132,5 +165,10 @@ addEventListener('mousemove', () => {
   idle = window.setTimeout(() => document.body.classList.add('no-cursor'), 1800);
 });
 
-slides.forEach((el) => ctrl(el).init?.(el));
+const pad = (n: number) => String(n).padStart(2, '0');
+slides.forEach((el, i) => {
+  el.querySelectorAll('[data-page-num]').forEach((n) => (n.textContent = pad(i + 1)));
+  el.querySelectorAll('[data-page-total]').forEach((n) => (n.textContent = pad(slides.length)));
+  ctrl(el).init?.(el);
+});
 document.fonts.ready.then(() => go(indexFromHash()));

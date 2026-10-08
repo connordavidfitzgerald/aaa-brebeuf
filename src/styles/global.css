@@ -38,10 +38,24 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: 'Favorit Mono';
+  src: url('/fonts/ABCFavoritMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Favorit Mono';
+  src: url('/fonts/ABCFavoritMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: block;
+}
+
 @theme {
   --color-lime: #20fe06;
   --font-sans: 'Favorit Pro', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Bradford LL', ui-serif, Georgia, serif;
+  --font-mono: 'Favorit Mono', ui-monospace, Menlo, monospace;
 }
 
 html,
@@ -59,25 +73,44 @@ body {
   letter-spacing: -0.03em;
 }
 
-/* Masked line used by the text reveal splitter */
-.line-mask {
-  display: block;
-  overflow: hidden;
-  /* room for descenders without clipping */
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
-}
-.line-inner {
-  display: block;
-  will-change: transform;
-}
-
 /* Slides start hidden until the deck controller takes over (avoids a flash) */
 .slide {
   visibility: hidden;
 }
 .slide.is-current {
   visibility: visible;
+}
+
+@layer components {
+  /* Masked line used by the text reveal splitter */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    /* room for descenders without clipping (display type runs at 0.8 line-height) */
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+  }
+  .line-inner {
+    display: block;
+    will-change: transform;
+  }
+
+  /* Small caps-style labels used across the Swiss-grid slides */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+}
+
+/* Grid overlay (press G) */
+#grid-overlay {
+  display: none;
+}
+.show-grid #grid-overlay {
+  display: grid;
 }
 
 .no-cursor {

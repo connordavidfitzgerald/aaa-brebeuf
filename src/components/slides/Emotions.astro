@@ -1,0 +1,37 @@
+---
+import ContentSlide from '../grid/ContentSlide.astro';
+import { sections, sectionLabel } from '../../data/sections';
+
+const pairs = [
+  ['Motivation', 'Determination'],
+  ['Excitment', 'Enthusiasm'],
+  ['Inspired', 'Inspiration'],
+  ['Energized', 'Vitality'],
+  ['Hopeful', 'Hope'],
+  ['Enlightened', 'Wonder'],
+  ['Reflective', 'Contemplation'],
+  ['Awe', 'Amazement'],
+  ['Supported', 'Security'],
+  ['Warmth', 'Joy'],
+  ['Humility', 'Reverence'],
+  ['Gratitude', 'Appreciation'],
+];
+---
+
+<ContentSlide title={['What emotions', 'should the', 'website evoke?']} section={sectionLabel(sections[1])}>
+  <div class="grid grid-cols-7 gap-x-[20px] pb-[16px]">
+    <div class="label col-span-3" data-a="lines"><span data-line>Feeling</span></div>
+    <div class="label col-span-4 text-black/45" data-a="lines"><span data-line>Emotion</span></div>
+  </div>
+  {
+    pairs.map(([feeling, emotion]) => (
+      <>
+        <div class="h-px origin-left bg-black/15" data-a="rule" />
+        <div class="grid grid-cols-7 gap-x-[20px] py-[6px] text-[44px] leading-[1.15] font-medium tracking-[-0.02em]">
+          <div class="col-span-3" data-a="lines"><span data-line>{feeling}</span></div>
+          <div class="col-span-4 text-[#8c8c8c]" data-a="lines"><span data-line>{emotion}</span></div>
+        </div>
+      </>
+    ))
+  }
+</ContentSlide>

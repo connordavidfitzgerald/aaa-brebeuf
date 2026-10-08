@@ -1,0 +1,29 @@
+---
+import MuxVideo from '../MuxVideo.astro';
+
+interface Props {
+  id: string;
+  playbackId: string;
+  /** Centred 871px-tall frame on black (slide 5 reel height) instead of full bleed. */
+  framed?: boolean;
+  /** Source aspect ratio, e.g. "3728 / 2160"; sets the frame width so nothing is cropped. */
+  aspect?: string;
+}
+const { id, playbackId, framed = false, aspect = '16 / 9' } = Astro.props;
+---
+
+<section class="slide absolute inset-0 overflow-hidden bg-black" data-slide="film" id={id}>
+  {
+    framed ? (
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="h-[871px] overflow-hidden" style={`aspect-ratio: ${aspect}`} data-film>
+          <MuxVideo playbackId={playbackId} class="h-full w-full" />
+        </div>
+      </div>
+    ) : (
+      <div class="absolute inset-0" data-film>
+        <MuxVideo playbackId={playbackId} class="h-full w-full" />
+      </div>
+    )
+  }
+</section>

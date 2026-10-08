@@ -1,21 +1,62 @@
 ---
-// Fixed 1920×1200 artboard (the Figma frame size), scaled to fit the viewport.
-// Author every slide in Figma pixels; the stage handles the rest.
+// 1920px-wide artboard scaled to the full viewport width. The height follows
+// the screen's shape (1080 on 16:9, 1200 on 16:10, up to 1440 on 4:3), so
+// slides anchor elements to the top, bottom or centre rather than fixed y values.
+//
+// Exposes:
+//   --stage-h  current artboard height in px
+//   --hang     the shared hang line the grid slides start from (200px at 1200 tall)
 ---
 
 <main
   id="stage"
-  class="absolute top-1/2 left-1/2 h-[1200px] w-[1920px] origin-center overflow-hidden bg-black"
-  style="transform: translate(-50%, -50%)"
+  class="absolute top-1/2 left-1/2 w-[1920px] origin-center overflow-hidden bg-black"
+  style="height: 1200px; --stage-h: 1200px; transform: translate(-50%, -50%)"
 >
   <slot />
+
+  <!-- 12-column grid: 40px margins, 20px gutters (toggle with G) -->
+  <div
+    id="grid-overlay"
+    class="pointer-events-none absolute inset-0 z-50 grid-cols-12 gap-x-[20px] px-[40px]"
+    aria-hidden="true"
+  >
+    {Array.from({ length: 12 }, () => <div class="bg-[#ff2bd6]/12 outline outline-[#ff2bd6]/40" />)}
+    <div class="absolute inset-x-0 top-[40px] h-px bg-[#ff2bd6]/60"></div>
+    <div class="absolute inset-x-0 top-(--hang) h-px bg-[#ff2bd6]/60"></div>
+    <div class="absolute inset-x-0 bottom-[40px] h-px bg-[#ff2bd6]/60"></div>
+  </div>
 </main>
 
+<style>
+  #stage {
+    --hang: clamp(140px, calc(var(--stage-h) / 6), 200px);
+  }
+</style>
+
 <script>
+  const W = 1920;
+  // Below 1080 (wider than 16:9) the layouts run out of room, so fit by height
+  // instead; above 1440 (taller than 4:3) letterbox top and bottom.
+  const MIN_H = 1080;
+  const MAX_H = 1440;
+
   const stage = document.getElementById('stage')!;
   const fit = () => {
-    const s = Math.min(innerWidth / 1920, innerHeight / 1200);
-    stage.style.transform = `translate(-50%, -50%) scale(${s})`;
+    let scale = innerWidth / W;
+    let h = innerHeight / scale;
+    if (h < MIN_H) {
+      h = MIN_H;
+      scale = innerHeight / MIN_H;
+    } else if (h > MAX_H) {
+      h = MAX_H;
+    }
+    h = Math.round(h);
+    stage.style.height = `${h}px`;
+    stage.style.setProperty('--stage-h', `${h}px`);
+    stage.dataset.h = String(h);
+    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    dispatchEvent(new CustomEvent('stage:resize', { detail: { height: h } }));
   };
   fit();
   addEventListener('resize', fit);

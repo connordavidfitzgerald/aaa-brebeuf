@@ -1,0 +1,63 @@
+---
+import MuxVideo from '../MuxVideo.astro';
+
+export interface CycleImage {
+  src: string;
+  /** Portraits sit in a centred 871px-tall frame on black instead of filling the stage. */
+  portrait?: boolean;
+}
+
+interface Props {
+  id: string;
+  title: string;
+  year: string;
+  images: CycleImage[];
+  /** Mux playback ID the cycle lands on and loops. */
+  video: string;
+}
+const { id, title, year, images, video } = Astro.props;
+const total = String(images.length + 1).padStart(2, '0');
+---
+
+<section class="slide absolute inset-0 overflow-hidden bg-black font-sans text-white" data-slide="cycle" id={id}>
+  {
+    images.map((item, i) => (
+      <figure class="absolute inset-0 overflow-hidden bg-black" data-cycle-item>
+        {item.portrait ? (
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="aspect-[3/4] h-[871px] overflow-hidden">
+              <img src={item.src} alt="" class="h-full w-full object-cover" data-cycle-media loading="eager" decoding="async" />
+            </div>
+          </div>
+        ) : (
+          <img
+            src={item.src}
+            alt=""
+            class="h-full w-full object-cover"
+            data-cycle-media
+            loading="eager"
+            decoding="async"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+          />
+        )}
+      </figure>
+    ))
+  }
+  <figure class="absolute inset-0 overflow-hidden" data-cycle-item data-cycle-video>
+    <div class="h-full w-full" data-cycle-media>
+      <MuxVideo playbackId={video} class="h-full w-full" />
+    </div>
+  </figure>
+
+  <div class="absolute top-[37px] left-[46px] z-10 text-[30px] leading-[36px] mix-blend-difference" data-split>
+    <span data-line>{title}</span>
+    <span data-line class="opacity-50">{year}</span>
+  </div>
+
+  <div
+    class="absolute top-[37px] right-[38px] z-10 text-[30px] leading-[36px] tabular-nums mix-blend-difference"
+    data-split
+  >
+    <span data-line><span data-cycle-count>01</span> / {total}</span>
+  </div>
+</section>

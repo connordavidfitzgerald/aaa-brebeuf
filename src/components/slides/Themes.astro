@@ -1,0 +1,48 @@
+---
+import ContentSlide from '../grid/ContentSlide.astro';
+import { sections, sectionLabel } from '../../data/sections';
+
+// Counts show how many participants offered the same word.
+const themes = [
+  {
+    name: 'Dynamism',
+    words: [['Dynamic', 2], ['Engaging', 2], ['Contemporary'], ['Interdisciplinary'], ['Community'], ['Collaboration']],
+  },
+  {
+    name: 'Impact',
+    words: [['Transformative'], ['Flourishing'], ['Uplifting'], ['Intentional'], ['Effective'], ['Hopeful']],
+  },
+  {
+    name: 'Accessibility',
+    words: [['Lighter on text'], ['Clear'], ['Simple', 2], ['Warm'], ['Beautiful'], ['Inviting']],
+  },
+] as { name: string; words: [string, number?][] }[];
+---
+
+<ContentSlide
+  title={['Themes']}
+  subtitle="Key themes emerging from all the words gathered in the previous exercise."
+  section={sectionLabel(sections[0])}
+>
+  <div class="grid grid-cols-7 gap-x-[20px]">
+    {
+      themes.map((t, i) => (
+        <div class="col-span-2">
+          <div class="label" data-a="lines"><span data-line>{`Theme 0${i + 1}`}</span></div>
+          <h3 class="mt-[12px] text-[44px] leading-[1] font-medium tracking-[-0.02em]" data-a="lines">
+            <span data-line>{t.name}</span>
+          </h3>
+          <div class="mt-[24px] mb-[20px] h-px origin-left bg-black" data-a="rule" />
+          <ul class="text-[32px] leading-[1.35] font-medium tracking-[-0.02em]" data-a="lines">
+            {t.words.map(([w, n]) => (
+              <li data-line>
+                {w}
+                {n && <span class="label ml-[6px] align-top text-black/40">×{n}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</ContentSlide>

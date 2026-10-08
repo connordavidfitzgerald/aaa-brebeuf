@@ -58,17 +58,17 @@ const type: SlideController = {
     tl.fromTo(
       photo,
       { clipPath: 'inset(0% 0% 0% 100%)' },
-      { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'power4.inOut' },
+      { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'expo.inOut' },
       0,
     );
-    tl.fromTo(photoImg, { scale: 1.15 }, { scale: 1, duration: 2.2, ease: 'power3.out' }, 0.2);
+    tl.fromTo(photoImg, { scale: 1.15 }, { scale: 1, duration: 1.6, ease: 'expo.out' }, 0.15);
 
-    revealLines(tl, heading, 0.1);
-    tl.fromTo(glyphEl, { yPercent: 100 }, { yPercent: 0, duration: 1.3, ease: 'power4.out' }, 0.2);
+    revealLines(tl, heading, 0.05);
+    tl.fromTo(glyphEl, { yPercent: 100 }, { yPercent: 0, duration: 0.95, ease: 'expo.out' }, 0.12);
 
-    if (quote) revealLines(tl, quote, 0.9, { stagger: 0.07, duration: 1.2 });
+    if (quote) revealLines(tl, quote, 0.6, { stagger: 0.05, duration: 0.9 });
 
-    tl.call(() => startCycle(glyphEl, labelEl), [], 1.1);
+    tl.call(() => startCycle(glyphEl, labelEl), [], 0.8);
     return tl;
   },
   leave(el) {

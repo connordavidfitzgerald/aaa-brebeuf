@@ -3,17 +3,66 @@ import Deck from '../layouts/Deck.astro';
 import Stage from '../components/Stage.astro';
 import S01Title from '../components/slides/S01Title.astro';
 import S02Statement from '../components/slides/S02Statement.astro';
-import S03Credits from '../components/slides/S03Credits.astro';
 import S04Type from '../components/slides/S04Type.astro';
 import S05Videos from '../components/slides/S05Videos.astro';
+import FullVideo from '../components/slides/FullVideo.astro';
+import ProjectCycle from '../components/slides/ProjectCycle.astro';
+import ProjectStill from '../components/slides/ProjectStill.astro';
+import Index from '../components/slides/Index.astro';
+import SectionSlide from '../components/grid/SectionSlide.astro';
+import FiveWords from '../components/slides/FiveWords.astro';
+import Themes from '../components/slides/Themes.astro';
+import Audience from '../components/slides/Audience.astro';
+import Emotions from '../components/slides/Emotions.astro';
+import Spectrum from '../components/slides/Spectrum.astro';
+import Websites from '../components/slides/Websites.astro';
+import CoreMessage from '../components/slides/CoreMessage.astro';
+import Merci from '../components/slides/Merci.astro';
+import { sections } from '../data/sections';
+
+const [s1, s2, s3, s4, s5] = sections;
+
+// Project assets from the A.A.A site (aaa-next), in project-page order.
+const bxb = [1, 2, 3, 4, 5, 6].map((n) => ({ src: `/media/bxb/0${n}.jpg` }));
+// Ecozoic: second image (text portrait) left out.
+const eco = (n: number, portrait = false) => ({ src: `/media/ecozoic/0${n}.jpg`, portrait });
+const ecozoic = [eco(1, true), eco(3), eco(4, true), eco(5, true), eco(6)];
 ---
 
 <Deck title="A.A.A — Leadership for the Ecozoic">
   <Stage>
     <S01Title />
     <S02Statement />
-    <S03Credits />
-    <S04Type />
+
+    <FullVideo id="film-1" framed aspect="3728 / 2160" playbackId="Z3GyyT3xtz2MU5X7a6NpNa63hrV5yCmLmF64qH9Np00k" />
+    <FullVideo id="film-2" playbackId="iU8heoPsVZrdSsS9D006daozDYoI01D7pHFNoSSSuDkuc" />
+    <ProjectCycle id="bxb" title="Brique par Brique" year="2025" images={bxb} video="00f02eD6Vs5T023j702VlB02uJls43i94H166Gdjb02gSPlPs" />
+    <ProjectStill id="bxb-still" src={bxb[0].src} />
+
+    <Index />
+
+    <SectionSlide section={s1} />
+    <FiveWords />
+    <Themes />
+
+    <SectionSlide section={s2} />
+    <Audience />
+    <Emotions />
+
+    <SectionSlide section={s3} />
+    <Spectrum />
+
+    <SectionSlide section={s4} />
+    <Websites />
+
+    <SectionSlide section={s5} />
+    <CoreMessage />
+
     <S05Videos />
+    <S04Type />
+
+    <ProjectCycle id="ecozoic" title="Leadership for the Ecozoic" year="2025" images={ecozoic} video="q3fbY9100adakR7QZRetPc02eCTYid9E00TprmAmla18S4" />
+
+    <Merci />
   </Stage>
 </Deck>

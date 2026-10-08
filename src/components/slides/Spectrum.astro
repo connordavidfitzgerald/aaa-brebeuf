@@ -1,0 +1,57 @@
+---
+import ContentSlide from '../grid/ContentSlide.astro';
+import { sections, sectionLabel } from '../../data/sections';
+
+// [left, right, current, future] — positions are 0–1 along the track, measured from Figma.
+const scales: [string, string, number, number][] = [
+  ['Academic', 'Global', 0.17, 0.51],
+  ['Traditional', 'Innovative', 0.17, 0.71],
+  ['Global', 'Local', 0.71, 0.5],
+  ['Theoretical', 'Practical', 0.17, 0.71],
+  ['Established', 'Emerging', 0.3, 0.55],
+  ['Conservative', 'Progressive', 0.23, 0.71],
+  ['Institutional', 'Community-driven', 0.23, 0.55],
+  ['Formal', 'Conversational', 0.17, 0.59],
+  ['Complex', 'Simplified', 0.08, 0.88],
+];
+const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
+---
+
+<ContentSlide title={['Where does', 'L4E sit?']} section={sectionLabel(sections[2])} kind="spectrum">
+  <div class="grid grid-cols-7 gap-x-[20px] pb-[24px]">
+    <div class="label col-span-3 col-start-3 flex gap-[32px]" data-a="lines">
+      <span data-line class="flex items-center gap-[10px]">
+        <i class="inline-block size-[14px] rounded-full bg-[#d9d9d9]"></i>Current
+      </span>
+      <span data-line class="flex items-center gap-[10px]">
+        <i class="inline-block size-[14px] rounded-full bg-lime"></i>Future
+      </span>
+    </div>
+  </div>
+  {
+    scales.map(([left, right, now, next]) => (
+      <div class="grid h-[84px] grid-cols-7 items-center gap-x-[20px] border-t border-black/15">
+        <div class="label col-span-2 text-right text-[16px]" data-a="lines">
+          <span data-line>{left}</span>
+        </div>
+        <div class="relative col-span-3 h-[22px]">
+          <div class="absolute inset-x-0 top-1/2 h-px origin-left bg-black" data-a="rule" />
+          <i
+            class="absolute top-0 -ml-[11px] size-[22px] rounded-full bg-[#d9d9d9]"
+            style={`left:${pct(now)}`}
+            data-dot="now"
+          />
+          <i
+            class="absolute top-0 -ml-[11px] size-[22px] rounded-full bg-lime"
+            style={`left:${pct(next)}`}
+            data-dot="next"
+            data-from={pct(now)}
+          />
+        </div>
+        <div class="label col-span-2 text-[16px]" data-a="lines">
+          <span data-line>{right}</span>
+        </div>
+      </div>
+    ))
+  }
+</ContentSlide>

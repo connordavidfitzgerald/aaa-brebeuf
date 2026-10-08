@@ -1,0 +1,59 @@
+---
+/**
+ * Full 1920×1200 section-divider artwork. Used as-is by section slides and
+ * scaled down for the index tiles, so both always match.
+ *
+ * Grid: 12 columns, 40px margins, 20px gutters → column n starts at 40 + n·155.
+ */
+interface Props {
+  num: string;
+  title: string[];
+}
+const { num, title } = Astro.props;
+
+const COLS = 12;
+const ROWS = 8;
+const COL_STEP = 155;
+// Rows spread so the last label lands on the bottom margin at any stage height.
+const rowTop = (r: number) => `calc(40px + ${r} * (var(--stage-h) - 94px) / ${ROWS - 1})`;
+
+const cells: { x: number; y: string; n: number }[] = [];
+for (let r = 0; r < ROWS; r++) {
+  for (let c = 0; c < COLS; c++) {
+    if (r === 0 && c === 0) continue; // logo sits here
+    cells.push({ x: 40 + c * COL_STEP, y: rowTop(r), n: (r % 2) * 4 + (c % 4) + 1 });
+  }
+}
+---
+
+<div class="absolute inset-0 bg-lime font-sans text-black group-hover:bg-white">
+  {
+    cells.map(({ x, y, n }) => (
+      <span
+        class="absolute flex items-center gap-[5px] text-[14px] leading-[14px] font-medium tracking-[-0.02em]"
+        style={`left:${x}px; top:${y}`}
+        data-cell
+        aria-hidden="true"
+      >
+        <span
+          class="inline-block size-[14px] bg-current"
+          style={`mask: url(/media/marks/ci-0${n}.png) center / contain no-repeat; -webkit-mask: url(/media/marks/ci-0${n}.png) center / contain no-repeat;`}
+        />
+        C.I –0{n}
+      </span>
+    ))
+  }
+
+  <div class="absolute top-[40px] left-[40px] text-[20px] leading-[0.8] font-bold tracking-[-0.05em]" data-a="lines">
+    <span data-line>Applied</span>
+    <span data-line>Archive</span>
+  </div>
+
+  <!-- Number + title centred as a block, as in the Figma dividers -->
+  <div
+    class="absolute inset-0 flex flex-col items-center justify-center gap-[21px] text-center text-[263px] leading-[0.8] font-bold tracking-[-0.05em] whitespace-nowrap"
+  >
+    <div data-display><span data-line>{num}</span></div>
+    <h2 class="leading-[0.98]" data-display>{title.map((line) => <span data-line>{line}</span>)}</h2>
+  </div>
+</div>

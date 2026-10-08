@@ -1,0 +1,45 @@
+---
+import ContentSlide from "../grid/ContentSlide.astro";
+import { sections, sectionLabel } from "../../data/sections";
+
+const humans = [
+    { who: "Ecozoic community", detail: "Students, post-docs, researchers, partners" },
+    { who: "Prospective members", detail: "Students, post-docs, researchers" },
+    { who: "Prospective donors" },
+    { who: "Temporary partners" },
+    { who: "Curious" },
+];
+---
+
+<ContentSlide
+    title={["Who is L4E", "trying to reach?"]}
+    subtitle="Key themes emerging from this exercise"
+    section={sectionLabel(sections[1])}
+>
+    {humans.map((h, i) => (
+        <>
+            <div class="h-px origin-left bg-black" data-a="rule" />
+            <div class="grid grid-cols-7 gap-x-[20px] pt-[18px] pb-[44px]">
+                <div class="label col-span-1 pt-[10px]" data-a="lines">
+                    <span data-line>{`Human 0${i + 1}`}</span>
+                </div>
+                <div class="col-span-6" data-a="lines">
+                    <span
+                        data-line
+                        class="text-[52px] leading-[1.05] font-medium tracking-[-0.02em]"
+                    >
+                        {h.who}
+                    </span>
+                    {h.detail && (
+                        <span
+                            data-line
+                            class="mt-[6px] text-[32px] leading-[1.2] font-medium tracking-[-0.02em] text-black/45"
+                        >
+                            {h.detail}
+                        </span>
+                    )}
+                </div>
+            </div>
+        </>
+    ))}
+</ContentSlide>

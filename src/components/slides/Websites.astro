@@ -1,0 +1,48 @@
+---
+import ContentSlide from '../grid/ContentSlide.astro';
+import { sections, sectionLabel } from '../../data/sections';
+
+// Reading order matches the Figma board; images are public/media/sites/site-XX.jpg.
+const sites = [
+  'Video & institutional',
+  'Interactive & inviting',
+  'Video + clear messaging',
+  'HQ pictures + blur',
+  'Warm & inviting + animations',
+  'Animations',
+  'Animations & inviting colours',
+  'Profile videos',
+  'UI + filters',
+  'Profile presentation',
+  'UI (innovative but still clear)🖤',
+  'Nice landing — deemed too contemporary museumy',
+  'Video landing',
+  'Clear messaging',
+  'Video landing',
+  'Video landing + awe pictures',
+  'Contemplative nature video',
+];
+---
+
+<ContentSlide title={['Selected', 'websites +', 'emotions']} section={sectionLabel(sections[3])}>
+  <div class="grid grid-cols-4 gap-x-[20px] gap-y-[16px]">
+    {
+      sites.map((label, i) => (
+        <figure>
+          <div class="aspect-[251/128] overflow-hidden bg-black/5" data-a="clip">
+            <img
+              src={`/media/sites/site-${String(i + 1).padStart(2, '0')}.jpg`}
+              alt={label}
+              class="h-full w-full object-cover object-top"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <figcaption class="label mt-[8px] text-[12px] leading-[15px]" data-a="lines">
+            <span data-line>{label}</span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</ContentSlide>

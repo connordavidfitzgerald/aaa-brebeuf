@@ -1,0 +1,27 @@
+---
+// A single project image held on its own slide. Uses the `film` controller
+// (settle-in scale on [data-film]); there's just no video to play.
+interface Props {
+  id: string;
+  src: string;
+  /** Centred 871px-tall portrait frame on black instead of full bleed. */
+  portrait?: boolean;
+}
+const { id, src, portrait = false } = Astro.props;
+---
+
+<section class="slide absolute inset-0 overflow-hidden bg-black" data-slide="film" id={id}>
+  {
+    portrait ? (
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="aspect-[3/4] h-[871px] overflow-hidden" data-film>
+          <img src={src} alt="" class="h-full w-full object-cover" decoding="async" />
+        </div>
+      </div>
+    ) : (
+      <div class="absolute inset-0" data-film>
+        <img src={src} alt="" class="h-full w-full object-cover" decoding="async" />
+      </div>
+    )
+  }
+</section>

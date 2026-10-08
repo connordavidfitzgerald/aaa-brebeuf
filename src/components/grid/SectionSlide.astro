@@ -1,0 +1,13 @@
+---
+import SectionArt from './SectionArt.astro';
+import type { Section } from '../../data/sections';
+
+interface Props {
+  section: Section;
+}
+const { section } = Astro.props;
+---
+
+<section id={section.id} class="slide absolute inset-0 overflow-hidden" data-slide="section">
+  <SectionArt num={section.num} title={section.title} />
+</section>
