@@ -1,0 +1,22 @@
+---
+import MuxVideo from '../MuxVideo.astro';
+
+const playbackIds = [
+  'QbYAVJKpp3Jvg01jXLBsg24pt025IpXGlhwusSejqh3rw',
+  'N00I4BmynmbwdiAgM9CMT2ytS01iZrMnBp6qqy112RZFM',
+  'Tyn8xBzIFmBpgADOMhUMtpiXEet4eks9H4l02O98yMkA',
+  'Q3T81EFbujaCk3diwagRcviKFeYGFfYiYTY00VW01qJhQ',
+];
+---
+
+<section class="slide absolute inset-0 overflow-hidden bg-black" data-slide="videos">
+  <div class="absolute inset-0" data-reel>
+    {
+      playbackIds.map((id) => (
+        <div class="absolute top-0 left-[169px] h-[871px] w-[1582px] overflow-hidden" data-reel-item>
+          <MuxVideo playbackId={id} class="h-full w-full" />
+        </div>
+      ))
+    }
+  </div>
+</section>

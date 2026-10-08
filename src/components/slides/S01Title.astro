@@ -1,0 +1,27 @@
+---
+const word = 'A.A.A';
+---
+
+<section class="slide absolute inset-0 overflow-hidden bg-lime font-sans text-black" data-slide="title">
+  <div class="absolute top-[37px] left-[46px] text-[30px] leading-[36px]" data-split>
+    <span data-line>Applied Archive Atelier</span>
+    <span data-line class="opacity-50">UQAM Design</span>
+  </div>
+
+  <div class="absolute top-[37px] right-[38px] text-[30px] leading-[36px]" data-split>
+    <span data-line>7 octobre 2026</span>
+  </div>
+
+  <h1
+    class="tracking-display absolute top-[624px] left-[40px] h-[576px] text-[720px] leading-[576px] font-bold whitespace-nowrap"
+    aria-label={word}
+  >
+    {
+      [...word].map((c) => (
+        <span class="inline-block" data-char={c === '.' ? 'dot' : 'letter'} aria-hidden="true">
+          {c}
+        </span>
+      ))
+    }
+  </h1>
+</section>

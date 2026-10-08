@@ -1,0 +1,23 @@
+---
+interface Props {
+  playbackId: string;
+  class?: string;
+}
+const { playbackId, class: className } = Astro.props;
+const poster = `https://image.mux.com/${playbackId}/thumbnail.webp?width=1600&time=1`;
+---
+
+<mux-video
+  playback-id={playbackId}
+  poster={poster}
+  class:list={['block', className]}
+  style="--media-object-fit: cover;"
+  muted
+  autoplay
+  loop
+  playsinline
+  preload="auto"></mux-video>
+
+<script>
+  import '@mux/mux-video';
+</script>

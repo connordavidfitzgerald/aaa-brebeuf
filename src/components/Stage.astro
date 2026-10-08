@@ -1,0 +1,22 @@
+---
+// Fixed 1920×1200 artboard (the Figma frame size), scaled to fit the viewport.
+// Author every slide in Figma pixels; the stage handles the rest.
+---
+
+<main
+  id="stage"
+  class="absolute top-1/2 left-1/2 h-[1200px] w-[1920px] origin-center overflow-hidden bg-black"
+  style="transform: translate(-50%, -50%)"
+>
+  <slot />
+</main>
+
+<script>
+  const stage = document.getElementById('stage')!;
+  const fit = () => {
+    const s = Math.min(innerWidth / 1920, innerHeight / 1200);
+    stage.style.transform = `translate(-50%, -50%) scale(${s})`;
+  };
+  fit();
+  addEventListener('resize', fit);
+</script>

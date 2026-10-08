@@ -1,0 +1,51 @@
+---
+// The current photo has the quote baked in. Once a clean photo replaces
+// /media/s4-photo.jpg, flip this to true to set the quote as live, animated text.
+const QUOTE_LIVE = false;
+---
+
+<section class="slide absolute inset-0 overflow-hidden bg-white text-black" data-slide="type">
+  <!-- Left: type specimen (Figma "Frame 492", clips content) -->
+  <div class="absolute top-[10px] left-[10px] h-[1180px] w-[945px] overflow-hidden font-serif font-medium">
+    <div class="absolute top-[28px] left-[31px] text-[32px] leading-[37px]" data-specimen>
+      <span data-line>Bradford LL</span>
+      <span data-line class="opacity-50" data-label>Letter A</span>
+    </div>
+
+    <div
+      class="absolute top-[834px] left-[31px] text-[381.6px] leading-[420px] whitespace-nowrap"
+      data-glyph
+      aria-live="off"
+    >
+      Aa
+    </div>
+  </div>
+
+  <!-- Right: photo -->
+  <div class="absolute top-[10px] left-[965px] h-[1180px] w-[945px] overflow-hidden" data-photo>
+    <img
+      src="/media/s4-photo.jpg"
+      alt="A person crouched at the edge of a forest stream, photographing the water."
+      class="h-full w-full object-cover"
+      decoding="async"
+    />
+
+    {
+      QUOTE_LIVE && (
+        <blockquote
+          class="absolute top-[45px] left-[43px] w-[880px] font-serif text-[62px] leading-[1.4] font-normal text-white"
+          data-quote
+        >
+          <span data-line>“Leadership for the Ecozoic</span>
+          <span data-line>(L4E) emerges from the</span>
+          <span data-line>recognition that humanity</span>
+          <span data-line>must fundamentally</span>
+          <span data-line class="italic">transform its relationship with</span>
+          <span data-line>
+            <em>the Earth</em>”
+          </span>
+        </blockquote>
+      )
+    }
+  </div>
+</section>
