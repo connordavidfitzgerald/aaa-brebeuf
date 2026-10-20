@@ -12,7 +12,7 @@ interface Props {
   title: string;
   year: string;
   images: CycleImage[];
-  /** Mux playback ID the cycle lands on and loops. */
+  /** Mux playback ID the cycle lands on; when it ends the cycle starts over. */
   video: string;
 }
 const { id, title, year, images, video } = Astro.props;
